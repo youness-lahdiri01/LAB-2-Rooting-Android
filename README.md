@@ -234,6 +234,7 @@ Ouvrir écran d’accueil
 Rechercher un item
 
 Ouvrir fiche produit/profil
+<img width="667" height="530" alt="Screenshot 2026-02-11 200216" src="https://github.com/user-attachments/assets/05551835-2569-4595-a35e-7880b0662ffe" />
 
 Observations factuelles :
 
