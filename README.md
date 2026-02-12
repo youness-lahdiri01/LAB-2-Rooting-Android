@@ -78,6 +78,44 @@ Tester la robustesse du stockage
 
 Analyser les comportements runtime avanc
 
+Matrice de Risques et Mesures Défensives — TP Rooting Android
+## Matrice de Risques 
+
+Intégrité non garantie → Conclusions biaisées sur la sécurité réelle
+
+Surface d’attaque accrue si l’appareil sort du labo → Exposition à des menaces externes
+
+Données sensibles exposées si présentes → Violation potentielle de confidentialité
+
+Instabilité système → Tests non reproductibles et résultats incohérents
+
+Mélange comptes perso/test → Fuite possible d’informations personnelles
+
+Mauvais nettoyage fin de séance → Persistance de données sensibles
+
+Réseau non isolé → Effets involontaires sur systèmes externes
+
+Traçabilité insuffisante → Impossible de reproduire ou d’auditer les tests
+
+Principe de sécurité : Chaque risque identifié doit être associé à une mesure d’atténuation correspondante. C’est le principe de la gestion des risques en cybersécurité.
+
+## Mesures Défensives
+
+Réseau isolé pour éviter toute communication non contrôlée
+
+Données fictives uniquement pour éliminer tout risque de fuite réelle
+
+Device / AVD dédié exclusivement aux tests de sécurité
+
+Snapshots ou wipe en fin de séance pour ne laisser aucune trace
+
+Journal de configuration détaillé pour assurer la reproductibilité
+
+Aucun compte personnel pour éviter tout mélange de données
+
+Contrôle strict des APK installées pour limiter les risques
+
+Horodatage + captures des étapes pour une traçabilité complète
 ## Cloner le projet DIVA depuis GitHub
 
 Ouvre PowerShell ou Terminal et tape :
@@ -96,6 +134,8 @@ Accès au dossier privé : /data/data/jakhar.aseem.diva/
 <img width="838" height="108" alt="Screenshot 2026-02-11 192452" src="https://github.com/user-attachments/assets/618fa67f-5e14-4b1f-8d2f-8aebca655d1a" />
 
 Vérification des SharedPreferences et fichiers en clair
+<img width="1295" height="825" alt="Screenshot 2026-02-11 192734" src="https://github.com/user-attachments/assets/ca3ce5f6-d37f-4101-a906-d9af4306dc21" />
+
 
 ## Analyse des logs via :
 
@@ -110,12 +150,162 @@ Vérifier si l’application écrit des informations sensibles dans les logs sys
 🔧 Commande utilisée
 adb logcat
 <img width="1702" height="632" alt="image" src="https://github.com/user-attachments/assets/402c595f-db36-4fc6-88d3-135bc7e3cf9b" />
-![Uploading image.png…]()
 
-## Reset 
+## Traçabilité
+Scénarios testés (3) :
 
+-Ouvrir écran d’accueil
+
+-Rechercher un item
+
+-Ouvrir fiche produit/profil
+
+Observations factuelles :
+
+Root actif : uid=0
+
+Verified Boot : Yellow
+
+Partition /system montée en lecture/écriture
+
+Accès aux logs via logcat
+
+Données sensibles dans shared_prefs 
+Limites :
+
+Application simplifiée de test
+
+Environnement isolé
+
+Données fictives uniquement
+Reset effectué : Oui 
+
+## Rooting Android — Livrables
+1️- Définition Rooting 
+
+Le rooting correspond à l’obtention des privilèges super-utilisateur (root) sur Android.
+Il permet d’accéder aux partitions système normalement protégées et de modifier le système à bas niveau.
+En laboratoire, il permet d’observer des comportements internes des applications et de tester la sécurité.
+Cependant, le rooting est risqué et nécessite un environnement isolé, traçable et réinitialisable.
+
+2️- Schéma simplifié Verified Boot / AVB
+ROM signée
+   ↓
+Bootloader vérifié
+   ↓
+Kernel
+   ↓
+Système Android
+   ↓
+Applications sandboxées
+
+AVB : vérification moderne + anti-rollback
+
+
+Explication : chaque étape vérifie l’intégrité de la suivante avant exécution → "chaîne de confiance".
+
+3️- 8 Risques + 8 Mesures Défensives
+Risques	Mesures défensives
+Intégrité non garantie	Réseau isolé pour éviter toute communication non contrôlée
+Surface d’attaque accrue	Données fictives uniquement
+Données sensibles exposées	Device/AVD dédié aux tests de sécurité
+Instabilité système	Snapshots ou wipe en fin de séance
+Mélange comptes perso/test	Journal de configuration détaillé
+Mauvais nettoyage	Aucun compte personnel utilisé
+Réseau non isolé	Contrôle strict des APK installées
+Traçabilité insuffisante	Horodatage + captures étapes pour traçabilité complète
+4️- MASVS — 2 exigences
+
+STORAGE-1 : Les données sensibles (mot de passe, token, API key) doivent être stockées de façon sécurisée (chiffrement recommandé).
+
+NETWORK-1 : Toutes les communications réseau doivent être sécurisées via TLS avec validation correcte des certificats.
+
+
+
+6️- Fiche environnement
+Support : AVD Android Emulator
+Version Android / API : API 24
+Application + version : app-debug.apk v1.0
+
+Scénarios testés :
+
+Ouvrir écran d’accueil
+
+Rechercher un item
+
+Ouvrir fiche produit/profil
+
+Observations factuelles :
+
+Root actif : uid=0
+
+Verified Boot : Yellow
+
+Partition /system montée en lecture/écriture
+
+Accès aux logs via logcat
+
+Données sensibles dans shared_prefs (exemple fictif)
+
+Limites : application simplifiée, environnement isolé, données fictives
+Reset effectué : Oui 
 
 
 adb emu avd wipe-data
 
 <img width="892" height="576" alt="Screenshot 2026-02-12 184646" src="https://github.com/user-attachments/assets/f98fd078-dc4e-4b6a-96d2-39dc605b5fa1" />
+Rooting Android — Livrables
+
+- Checklist Reset
+
+ Données de test supprimées
+
+ Wipe AVD effectué ou device reset
+
+ Capture écran assistant initial Android
+
+ Capture résultat adb root
+
+ Capture résultat getprop ro.boot.verifiedbootstate
+
+ Capture logcat si nécessaire
+
+ Rapport sauvegardé
+
+ Aucun compte personnel utilisé
+ ## Checklist Finale 
+🔹 Début de séance (préparation)
+
+ Périmètre écrit et défini
+
+ AVD neuf / propre
+
+ Application de test installée
+
+ 3 scénarios notés et documentés
+
+ Versions Android / Application notées
+
+🔹 Fin de séance (nettoyage / traçabilité)
+
+ Données de test supprimées
+
+ Reset effectué (Wipe AVD ou Reset device)
+
+ Preuve du reset (captures écran / commandes)
+
+ Rapport + traçabilité sauvegardés
+
+ Aucun compte personnel utilisé
+
+🔹 Méthodologie professionnelle
+
+Cette checklist suit le principe PDCA (Plan – Do – Check – Act) :
+
+Plan : définir le périmètre et préparer l’environnement
+
+Do : exécuter les tests de façon contrôlée
+
+Check : vérifier les résultats et documenter
+
+Act : nettoyer, réinitialiser, et sauvegarder la traçabilité
