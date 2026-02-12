@@ -45,16 +45,16 @@ Ces mécanismes fonctionnent ensemble pour sécuriser l’appareil.
 
 
 ## Verified Boot
-🔹 Objectif principal
+### Objectif principal
 
 Garantir que le système qui démarre est authentique, signé et non modifié par un acteur malveillant.
 
-🔹 Chain of Trust 
+### Chain of Trust 
 
 La chain of trust est une série de vérifications où chaque composant vérifie l’authenticité du suivant avant de l’exécuter.
 Chaque maillon valide le suivant, du bootloader jusqu’au système Android.
 
-🔹 Pourquoi l’intégrité au démarrage est critique ?
+### Pourquoi l’intégrité au démarrage est critique ?
 
 Si le démarrage est compromis, toutes les protections ultérieures peuvent être contournées.
 Un système compromis dès le boot peut masquer des malwares et désactiver les mécanismes de sécurité.
@@ -143,11 +143,11 @@ adb logcat | findstr diva
 <img width="1876" height="425" alt="Screenshot 2026-02-12 184444" src="https://github.com/user-attachments/assets/561ff75f-a8e7-4d60-a0fb-929712ddb8ca" />
 
 ## Analyse des logs (Logcat)
-🎯 Objectif
+### Objectif
 
 Vérifier si l’application écrit des informations sensibles dans les logs système.
 
-🔧 Commande utilisée
+### Commande utilisée
 adb logcat
 <img width="1702" height="632" alt="image" src="https://github.com/user-attachments/assets/402c595f-db36-4fc6-88d3-135bc7e3cf9b" />
 
@@ -181,14 +181,14 @@ Données fictives uniquement
 Reset effectué : Oui 
 
 ## Rooting Android — Livrables
-1️- Définition Rooting 
+### Définition Rooting 
 
 Le rooting correspond à l’obtention des privilèges super-utilisateur (root) sur Android.
 Il permet d’accéder aux partitions système normalement protégées et de modifier le système à bas niveau.
 En laboratoire, il permet d’observer des comportements internes des applications et de tester la sécurité.
 Cependant, le rooting est risqué et nécessite un environnement isolé, traçable et réinitialisable.
 
-2️- Schéma simplifié Verified Boot / AVB
+### Schéma simplifié Verified Boot / AVB
 ROM signée
    ↓
 Bootloader vérifié
@@ -204,8 +204,8 @@ AVB : vérification moderne + anti-rollback
 
 Explication : chaque étape vérifie l’intégrité de la suivante avant exécution → "chaîne de confiance".
 
-3️- 8 Risques + 8 Mesures Défensives
-Risques	Mesures défensives
+
+### Risques	Mesures défensives
 Intégrité non garantie	Réseau isolé pour éviter toute communication non contrôlée
 Surface d’attaque accrue	Données fictives uniquement
 Données sensibles exposées	Device/AVD dédié aux tests de sécurité
@@ -214,7 +214,7 @@ Mélange comptes perso/test	Journal de configuration détaillé
 Mauvais nettoyage	Aucun compte personnel utilisé
 Réseau non isolé	Contrôle strict des APK installées
 Traçabilité insuffisante	Horodatage + captures étapes pour traçabilité complète
-4️- MASVS — 2 exigences
+### MASVS — 2 exigences
 
 STORAGE-1 : Les données sensibles (mot de passe, token, API key) doivent être stockées de façon sécurisée (chiffrement recommandé).
 
@@ -222,7 +222,7 @@ NETWORK-1 : Toutes les communications réseau doivent être sécurisées via TLS
 
 
 
-6️- Fiche environnement
+ ### Fiche environnement
 Support : AVD Android Emulator
 Version Android / API : API 24
 Application + version : app-debug.apk v1.0
@@ -256,25 +256,10 @@ adb emu avd wipe-data
 <img width="892" height="576" alt="Screenshot 2026-02-12 184646" src="https://github.com/user-attachments/assets/f98fd078-dc4e-4b6a-96d2-39dc605b5fa1" />
 Rooting Android — Livrables
 
-- Checklist Reset
 
- Données de test supprimées
 
- Wipe AVD effectué ou device reset
-
- Capture écran assistant initial Android
-
- Capture résultat adb root
-
- Capture résultat getprop ro.boot.verifiedbootstate
-
- Capture logcat si nécessaire
-
- Rapport sauvegardé
-
- Aucun compte personnel utilisé
  ## Checklist Finale 
-🔹 Début de séance (préparation)
+### Début de séance (préparation)
 
  Périmètre écrit et défini
 
@@ -282,11 +267,11 @@ Rooting Android — Livrables
 
  Application de test installée
 
- 3 scénarios notés et documentés
+ ### scénarios notés et documentés
 
  Versions Android / Application notées
 
-🔹 Fin de séance (nettoyage / traçabilité)
+### Fin de séance (nettoyage / traçabilité)
 
  Données de test supprimées
 
@@ -298,7 +283,7 @@ Rooting Android — Livrables
 
  Aucun compte personnel utilisé
 
-🔹 Méthodologie professionnelle
+### Méthodologie professionnelle
 
 Cette checklist suit le principe PDCA (Plan – Do – Check – Act) :
 
