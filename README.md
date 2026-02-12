@@ -222,6 +222,47 @@ NETWORK-1 : Toutes les communications réseau doivent être sécurisées via TLS
 
 
 
+##  Qu’est-ce que Magisk ?
+
+Magisk est un outil de rooting "systemless".  
+Il modifie l’image de boot sans toucher directement à la partition système.  
+Cela permet de conserver une structure système intacte tout en obtenant les privilèges root.  
+Certaines applications peuvent toutefois détecter sa présence.
+##  OWASP MASTG — Idées de Tests (2 exemples)
+
+**Lien :** [MASTG](https://mas.owasp.org/MASTG/)
+
+###  Relation MASVS ↔ MASTG
+- MASVS définit **quoi vérifier** (exigences de sécurité mobile).  
+- MASTG explique **comment vérifier** (guide pratique pour les tests).  
+> En pratique : MASVS = le “quoi”, MASTG = le “comment”.
+
+###  Idée de test 1 : Fichiers de préférences partagées
+- Vérifier si les fichiers dans `/data/data/[package_name]/shared_prefs/` contiennent des informations sensibles en clair (ex : mots de passe, tokens, clés API).  
+- **Astuce technique :** Avec les privilèges root, vous pouvez accéder à ce dossier normalement protégé.
+
+###  Idée de test 2 : Analyse des logs
+- Examiner les logs de l’application avec `adb logcat` pour détecter des fuites d’informations sensibles pendant l’exécution.  
+- **Astuce technique :** Les données sensibles peuvent apparaître dans les logs si l’application ne masque pas correctement ces informations.
+
+##  OWASP MASVS — 2 Exigences Principales
+
+**Lien :** [MASVS](https://mas.owasp.org/MASVS/)
+
+###  Contexte pour débutants
+OWASP (Open Web Application Security Project) est une référence mondiale en sécurité.  
+Le MASVS (Mobile Application Security Verification Standard) définit les standards pour évaluer la sécurité des applications mobiles.  
+> MASVS = **quoi vérifier**, pour s’assurer qu’une app respecte les bonnes pratiques de sécurité.
+
+###  Exigence 1 : STORAGE-1
+- Les données sensibles (mots de passe, tokens, API keys) doivent être stockées de façon sécurisée.  
+- **Bonnes pratiques :** Utilisation de chiffrement robuste (AES, Keystore Android).  
+- **Application pratique en labo :** Avec les privilèges root, vérifier les fichiers dans `/data/data/[package_name]/` pour détecter tout stockage en clair.
+
+###  Exigence 2 : NETWORK-1
+- Toutes les communications réseau doivent utiliser TLS avec une configuration correcte et validation stricte des certificats.  
+- **Application pratique en labo :** Intercepter le trafic réseau (proxy ou sniffing) pour vérifier que les données ne transitent pas en clair et que les certificats sont correctement vérifiés.
+
  ### Fiche environnement
 Support : AVD Android Emulator
 Version Android / API : API 24
