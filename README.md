@@ -42,9 +42,12 @@ Le modèle de permissions contrôle l’accès aux ressources sensibles comme la
 Le système protège aussi son intégrité globale contre les modifications non autorisées.
 Le sandboxing empêche une application malveillante d’accéder aux données d’une autre.
 Ces mécanismes fonctionnent ensemble pour sécuriser l’appareil.
+## Verified Boot (idée générale + check AVD)
+Lors de la vérification de l’état du Verified Boot à l’aide de la commande adb shell getprop ro.boot.verifiedbootstate, aucune valeur n’a été retournée. Ce résultat est normal dans le contexte d’un émulateur Android (AVD), car celui-ci ne reproduit pas entièrement le mécanisme de Verified Boot présent sur les appareils physiques. Certaines propriétés système, comme ro.boot.verifiedbootstate, ne sont donc pas définies dans les images d’émulation. Afin d’évaluer malgré tout le niveau de sécurité du système, nous avons utilisé la commande adb shell getenforce pour vérifier l’état de SELinux. Le résultat obtenu était Enforcing, ce qui signifie que les politiques de sécurité sont activement appliquées par le système et que les violations sont bloquées. Cela indique que, même si l’émulateur est rooté, le mécanisme de contrôle d’accès obligatoire (MAC) de SELinux reste actif, garantissant un certain niveau de protection du système.
+<img width="1911" height="1021" alt="image" src="https://github.com/user-attachments/assets/5b3ca208-2d3b-4deb-a1fa-9b2a5eb7e657" />
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/8e4271a1-447b-42a8-ae39-3b7bbf7f6d37" />
 
-## Verified Boot
 ### Objectif principal
 
 Garantir que le système qui démarre est authentique, signé et non modifié par un acteur malveillant.
@@ -59,7 +62,6 @@ Chaque maillon valide le suivant, du bootloader jusqu’au système Android.
 Si le démarrage est compromis, toutes les protections ultérieures peuvent être contournées.
 Un système compromis dès le boot peut masquer des malwares et désactiver les mécanismes de sécurité.
 
-<img width="1911" height="1021" alt="image" src="https://github.com/user-attachments/assets/5b3ca208-2d3b-4deb-a1fa-9b2a5eb7e657" />
 
 
 ## AVB (Android Verified Boot)
