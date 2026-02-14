@@ -138,6 +138,8 @@ Accès au dossier privé : /data/data/jakhar.aseem.diva/
 Vérification des SharedPreferences et fichiers en clair
 <img width="1295" height="825" alt="Screenshot 2026-02-11 192734" src="https://github.com/user-attachments/assets/ca3ce5f6-d37f-4101-a906-d9af4306dc21" />
 
+## sql injection
+<img width="1919" height="1019" alt="image" src="https://github.com/user-attachments/assets/49be2b8a-8187-45b2-948a-4f182d01f3c8" />
 
 ## Analyse des logs via :
 
